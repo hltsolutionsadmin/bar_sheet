@@ -1,0 +1,81 @@
+<h2 mat-dialog-title>
+  {{ productForm.value.id > 0 ? 'Edit Product' : 'Add Product' }}
+</h2>
+
+<mat-dialog-content [formGroup]="productForm">
+  <!-- Product Name -->
+  <mat-form-field class="full-width">
+    <mat-label>Product Name</mat-label>
+    <input matInput formControlName="name" />
+    <mat-error *ngIf="productForm.get('name')?.hasError('required')">
+      Name is required
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Category -->
+  <mat-form-field class="full-width">
+    <mat-label>Category</mat-label>
+    <mat-select formControlName="categoryId" required>
+      <mat-option *ngFor="let cat of categories" [value]="cat.id">
+        {{ cat.name }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="productForm.get('categoryId')?.hasError('required')">
+      Category is required
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Sizes Multi-select -->
+  <mat-form-field class="full-width">
+    <mat-label>Sizes</mat-label>
+    <mat-select
+      formControlName="productSizeIds"
+      multiple
+      (selectionChange)="onSizesChange($event.value)"
+    >
+      <mat-option *ngFor="let item of productSizes" [value]="item.productSizeId">
+        {{ item.name }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="productForm.get('productSizeIds')?.hasError('required')">
+      At least one size is required
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Variants: Price & Quantity -->
+  <div formArrayName="variants" *ngIf="variants.controls.length > 0">
+    <div
+      *ngFor="let variant of variants.controls; let i = index"
+      [formGroupName]="i"
+      class="variant-row"
+    >
+      <h4>{{ variant.value.sizeName }}</h4>
+
+      <div class="stats-grid">
+        <mat-form-field class="full-width">
+        <mat-label>{{ variant.value.sizeName }} Price</mat-label>
+        <input matInput type="number" formControlName="price" />
+        <mat-error *ngIf="variant.get('price')?.hasError('required')">
+          Price is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>{{ variant.value.sizeName }} Quantity</mat-label>
+        <input matInput type="number" formControlName="quantity" />
+        <mat-error *ngIf="variant.get('quantity')?.hasError('required')">
+          Quantity is required
+        </mat-error>
+      </mat-form-field>
+      </div>
+      
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="productForm.invalid">
+    Save
+  </button>
+</mat-dialog-actions>

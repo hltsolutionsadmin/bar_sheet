@@ -1,0 +1,55 @@
+.active {
+  background-color: rgba(63, 81, 181, 0.1);
+}
+.table-container {
+  overflow-x: auto;
+  margin-top: 16px;
+}
+.tab-content {
+  padding: 24px 0;
+}
+.report-filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 16px;
+}
+.report-type-badge,
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.type-sales {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+.type-inventory {
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+}
+.type-financial {
+  background-color: #e8f5e8;
+  color: #388e3c;
+}
+.type-customer {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+.status-draft {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+.status-published {
+  background-color: #e8f5e8;
+  color: #388e3c;
+}
+.status-archived {
+  background-color: #fafafa;
+  color: #757575;
+}
+
+.GenerateSalesReportButton {
+  margin-bottom: 1rem;
+}

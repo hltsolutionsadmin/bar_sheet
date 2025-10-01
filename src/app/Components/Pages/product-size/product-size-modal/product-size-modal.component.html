@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>
+  {{ data ? "Edit Product Size" : "Add New Product Size" }}
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="productSizeForm" class="size-form">
+    <mat-form-field class="full-width">
+      <mat-label>Product Size Name</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="name"
+        name="name"
+        required
+      />
+      <mat-error *ngIf="productSizeForm.get('name')?.hasError('required')">
+        Product Size Name is required
+      </mat-error>
+    </mat-form-field> 
+
+    <div class="toggle-field">
+      <mat-slide-toggle formControlName="isActive">
+        Active Status
+      </mat-slide-toggle>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSave()"
+    [disabled]="productSizeForm.invalid"
+  >
+    {{ data ? "Update" : "Save" }}
+  </button>
+</mat-dialog-actions>

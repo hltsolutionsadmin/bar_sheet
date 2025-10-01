@@ -1,0 +1,36 @@
+<div class="dashboard-containers">
+  <mat-sidenav-container>
+    <mat-sidenav-content>
+      <mat-toolbar color="Grey">
+        <span>Product Sizes</span>
+        <span class="flex-spacer"></span>
+        <button mat-raised-button color="accent" (click)="openSizeModal()">
+          <mat-icon>add</mat-icon>
+          Add Size
+        </button>
+      </mat-toolbar>
+
+      <div class="dashboard-content">
+        <div class="stats-grid">
+          <mat-card class="stat-card" *ngFor="let size of productSizes">
+            <mat-card-header>
+              <div
+                mat-card-avatar
+                style="
+                  background-color: #3f51b5;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <mat-icon style="color: white">{{ icon }}</mat-icon>
+              </div>
+              <mat-card-title>{{ size.name || 'Unnamed Size' }}</mat-card-title>
+              <mat-card-subtitle>{{ size.createdAt | date: 'MM/dd/yy' }}</mat-card-subtitle>
+            </mat-card-header>
+          </mat-card>
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

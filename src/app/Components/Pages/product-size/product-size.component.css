@@ -1,0 +1,6 @@
+.active {
+  background-color: rgba(63, 81, 181, 0.1);
+}
+.table-container {
+  overflow-x: auto;
+}

@@ -1,0 +1,9 @@
+.size-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 400px;
+}
+.toggle-field {
+  margin: 16px 0;
+}

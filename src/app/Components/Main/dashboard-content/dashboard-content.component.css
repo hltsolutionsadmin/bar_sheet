@@ -1,0 +1,21 @@
+/* Make container fill full screen */
+
+/* Scroll only content */
+.dashboard-content {
+  padding: 16px;
+  height: calc(100vh - 64px); /* full height minus toolbar */
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+
+.welcome-card {
+  margin-bottom: 24px;
+}
+.role-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  margin-top: 8px;
+}

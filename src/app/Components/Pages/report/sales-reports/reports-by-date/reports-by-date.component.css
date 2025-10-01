@@ -1,0 +1,184 @@
+.page-wrap {
+  padding: 10px;
+  font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+  height: 90%;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(16, 24, 40, 0.06);
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  height: 5%;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.date {
+  font-size: 13px;
+  color: #374151;
+}
+
+.date-value {
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border-radius: 6px;
+  height: 100%;
+}
+
+.sheet {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  height: 100%;
+}
+
+.sheet thead .top-row th {
+  color: black;
+  font-weight: 600;
+  padding: 10px 12px;
+  vertical-align: middle;
+  border: 1px solid black;
+}
+
+.sheet thead .sub-row th {
+  background: #e3f2fd;
+  color: #0b3b66;
+  font-weight: 600;
+  padding: 8px 10px;
+}
+
+.col-name { width: 16%; }
+.col-amount { width: 7%; text-align: center; }
+.col-sales-amount { width: 7%; text-align: center; } /* New column width */
+
+.brand-name-cols,
+.ob-col {
+  background-color: #f1f5f9;
+}
+
+.cell {
+  border: 1px solid #e6eef9;
+  padding: 6px 8px;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.numeric {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+}
+
+.editable {
+  border: 1px solid #e6eef9;
+  background: #ffffff;
+  padding: 4px 6px;
+  outline: none;
+  cursor: text;
+  min-width: 40px;
+}
+
+.editable:focus {
+  border: 2px solid #1976d2;
+  background: #ffffff;
+}
+
+.cb { color: #334155; background: #fafbfd; }
+
+/* Category row */
+.category-row .category-cell {
+  background: #f1f5f9;
+  color: #075985;
+  font-weight: 700;
+  padding: 6px 10px;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  border-right: 1px solid black; /* Ensure right borders for all cells */
+}
+
+
+/* Full column separators */
+.brand-name-cols,
+.category-row .brand-name-cols,
+td.brand-name-cols {
+  border-right: 1px solid black !important;
+}
+
+.ob-n,
+.category-row .ob-n,
+td.ob-n {
+  border-right: 1px solid black !important;
+}
+
+.receipts-n,
+.category-row .receipts-n,
+td.receipts-n {
+  border-right: 1px solid black !important;
+}
+
+.sale-n,
+.category-row .sale-n,
+td.sale-n {
+  border-right: 1px solid black !important;
+}
+
+.cb-n,
+.category-row .cb-n,
+td.cb-n {
+  border-right: 1px solid black !important;
+}
+
+.col-amount,
+.category-row .col-amount,
+td.amount {
+  border-right: 1px solid black !important;
+}
+
+.col-sales-amount,
+.category-row .col-sales-amount,
+td.sales-amount {
+  border-right: 1px solid black !important; /* New column separator */
+}
+
+.category-row td,
+.data-row td,
+.sub-row th {
+  border-right: 1px solid black !important;
+}
+
+.publish-button {
+  margin-left: 1rem;
+}
+
+.total-amounts {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 3rem;
+  .total-label {
+    margin: 0;
+    font-weight: 600;
+    color: #000;
+  }
+  .total-value {
+   margin: 0;
+  }
+}

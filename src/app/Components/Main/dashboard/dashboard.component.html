@@ -1,0 +1,80 @@
+<div class="dashboard-container">
+  <mat-sidenav-container class="full-container">
+  <mat-sidenav
+    #sidenav
+    class="nav-drawer"
+    [mode]="sidenavMode"
+    [opened]="sidenavOpened"
+  >
+    <!-- Side Nav Content -->
+    <div class="nav-header">
+      <mat-icon style="margin-right: 12px">business</mat-icon>
+      <span style="font-size: 18px; font-weight: 500">Business App</span>
+    </div>
+
+    <div class="nav-content">
+      <mat-nav-list>
+        <a mat-list-item routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeIfOver()">
+          <mat-icon matListItemIcon>dashboard</mat-icon>
+          <span matListItemTitle>Dashboard</span>
+        </a>
+        <a mat-list-item routerLink="/dashboard/categories" *ngIf="canAccessAdminFeatures()" routerLinkActive="active" (click)="closeIfOver()">
+          <mat-icon matListItemIcon>category</mat-icon>
+          <span matListItemTitle>Categories</span>
+        </a>
+        <a mat-list-item routerLink="/dashboard/products" *ngIf="canAccessAdminFeatures()" routerLinkActive="active" (click)="closeIfOver()">
+          <mat-icon matListItemIcon>inventory</mat-icon>
+          <span matListItemTitle>Products</span>
+        </a>
+        <a mat-list-item routerLink="/dashboard/product-sizes" *ngIf="canAccessAdminFeatures()" routerLinkActive="active" (click)="closeIfOver()">
+          <mat-icon matListItemIcon>straighten</mat-icon>
+          <span matListItemTitle>Product Sizes</span>
+        </a>
+        <a mat-list-item routerLink="/dashboard/reports" *ngIf="canAccessAdminFeatures()" routerLinkActive="active" (click)="closeIfOver()">
+          <mat-icon matListItemIcon>assessment</mat-icon>
+          <span matListItemTitle>Reports</span>
+        </a>
+        <a mat-list-item (click)="logout()">
+          <mat-icon matListItemIcon>logout</mat-icon>
+          <span matListItemTitle>Logout</span>
+        </a>
+      </mat-nav-list>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="toolbar-fixed">
+      <!-- Hamburger toggles sidenav only in mobile -->
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <span class="flex-spacer"></span>
+      <span class="user-role-badge">{{ currentUser?.role | titlecase }}</span>
+      <button mat-icon-button [matMenuTriggerFor]="userMenu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <div mat-menu-item>
+          <span style="font-size: 12px; color: #666">{{ currentUser?.email }}</span>
+        </div>
+        <div mat-menu-item>
+          <span style="font-size: 12px; color: #3f51b5">Role: {{ currentUser?.role | titlecase }}</span>
+        </div>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+     <div class="" style="height: 88%;">
+      <router-outlet></router-outlet>
+     </div>
+    
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+</div>
+
+

@@ -1,0 +1,144 @@
+<div class="dashboard-container" *ngIf="!showSalesReport()">
+  <mat-sidenav-container>
+    <mat-sidenav-content>
+      <mat-toolbar color="Grey">
+        <span>Reports</span>
+        <span class="flex-spacer"></span>
+        <button mat-raised-button color="accent" (click)="openSalesReport()">
+          <mat-icon>add</mat-icon>
+          Generate Report
+        </button>
+      </mat-toolbar>
+
+      <div class="dashboard-content">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Report Management</mat-card-title>
+            <mat-card-subtitle
+              >Generate and manage business reports</mat-card-subtitle
+            >
+          </mat-card-header>
+
+          <mat-card-content>
+            <mat-tab-group>
+              <mat-tab label="All Reports">
+               <div class="table-container">
+                  <table mat-table [dataSource]="dataSource" class="full-width">
+
+                    <!-- Date -->
+                    <ng-container matColumnDef="date">
+                      <th mat-header-cell *matHeaderCellDef>Date</th>
+                      <td mat-cell *matCellDef="let report">
+                        {{ report.date | date:'mediumDate' }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Status -->
+                    <ng-container matColumnDef="status">
+                      <th mat-header-cell *matHeaderCellDef>Status</th>
+                      <td mat-cell *matCellDef="let report">
+                        <span class="status-badge"
+                              [class]="'status-' + getStatus(report.isPublished).toLowerCase()">
+                          {{ getStatus(report.isPublished) }}
+                        </span>
+                      </td>
+                    </ng-container>
+
+                    <!-- Overall Total -->
+                    <ng-container matColumnDef="BreaksTotalAmount">
+                      <th mat-header-cell *matHeaderCellDef>Breaks Total</th>
+                      <td mat-cell *matCellDef="let report">
+                        {{ report.totalBreaksAmount | number }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Sales Amount -->
+                    <ng-container matColumnDef="totalSalesAmount">
+                      <th mat-header-cell *matHeaderCellDef>Sales Amount</th>
+                      <td mat-cell *matCellDef="let report">
+                        {{ report.totalSalesAmount | number }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Receipts Amount -->
+                    <ng-container matColumnDef="totalReceiptsAmount">
+                      <th mat-header-cell *matHeaderCellDef>Receipts Amount</th>
+                      <td mat-cell *matCellDef="let report">
+                        {{ report.totalReceiptsAmount | number }}
+                      </td>
+                    </ng-container>
+
+                    <!-- Actions -->
+                    <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef>Actions</th>
+                      <td mat-cell *matCellDef="let report">
+                        <button mat-icon-button color="primary" (click)="viewReport(report)">
+                          <mat-icon>remove_red_eye</mat-icon>
+                        </button>
+                        <button mat-icon-button color="accent" (click)="downloadReport(report)">
+                          <mat-icon>download</mat-icon>
+                        </button>
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                  </table>
+
+                  <!-- Paginator -->
+                  <mat-paginator
+                    [length]="totalCount"
+                    [pageSize]="pageSize"
+                    [pageSizeOptions]="[5, 10, 20]"
+                    (page)="onPageChange($event)">
+                  </mat-paginator>
+                </div>
+              </mat-tab>
+
+             <mat-tab label="Sales Reports">
+  <div class="tab-content">
+    <p>Sales performance and revenue analysis reports</p>
+    <div class="report-filters">
+      <mat-form-field>
+        <mat-label>Start Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="startPicker"
+          [(ngModel)]="startDate"
+          (dateChange)="onStartDateChange($event)"
+        />
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>End Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="endPicker"
+          [(ngModel)]="endDate"
+          (dateChange)="onEndDateChange($event)"
+        />
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+      <div class="GenerateSalesReportButton">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="generateSalesReport()"
+          [disabled]="!startDate || !endDate"
+        >
+          Download PDF
+        </button>
+      </div>
+    </div>
+  </div>
+</mat-tab>
+            </mat-tab-group>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+<app-sales-reports *ngIf="showSalesReport()" (cancel)="closeSalesReport()" style="display: flex; flex-direction: column; height: 100%;"></app-sales-reports>

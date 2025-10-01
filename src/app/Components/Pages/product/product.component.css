@@ -1,0 +1,23 @@
+.active {
+  background-color: rgba(63, 81, 181, 0.1);
+}
+.table-container {
+  overflow-x: auto;
+}
+.variant-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.variant-size {
+  font-weight: 500;
+}
+
+.variant-price {
+  color: #2e7d32; /* green */
+}
+
+.variant-qty {
+  color: #1565c0; /* blue */
+}

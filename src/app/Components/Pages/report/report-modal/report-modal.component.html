@@ -1,0 +1,76 @@
+<h2 mat-dialog-title>{{ data ? "Edit Report" : "Generate New Report" }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="reportForm" class="report-form">
+    <mat-form-field class="full-width">
+      <mat-label>Report Title</mat-label>
+      <input matInput formControlName="title" required />
+      <mat-error *ngIf="reportForm.get('title')?.hasError('required')">
+        Report title is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Report Type</mat-label>
+      <mat-select formControlName="type" required>
+        <mat-option value="sales">Sales Report</mat-option>
+        <mat-option value="inventory">Inventory Report</mat-option>
+        <mat-option value="financial">Financial Report</mat-option>
+        <mat-option value="customer">Customer Report</mat-option>
+      </mat-select>
+      <mat-error *ngIf="reportForm.get('type')?.hasError('required')">
+        Report type is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        rows="3"
+        required
+      ></textarea>
+      <mat-error *ngIf="reportForm.get('description')?.hasError('required')">
+        Description is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Date Range</mat-label>
+      <input
+        matInput
+        formControlName="dateRange"
+        required
+        placeholder="e.g., Jan 1 - Jan 31, 2024"
+      />
+      <mat-error *ngIf="reportForm.get('dateRange')?.hasError('required')">
+        Date range is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status" required>
+        <mat-option value="draft">Draft</mat-option>
+        <mat-option value="published">Published</mat-option>
+        <mat-option value="archived">Archived</mat-option>
+      </mat-select>
+      <mat-error *ngIf="reportForm.get('status')?.hasError('required')">
+        Status is required
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSave()"
+    [disabled]="reportForm.invalid"
+  >
+    {{ data ? "Update" : "Generate" }}
+  </button>
+</mat-dialog-actions>

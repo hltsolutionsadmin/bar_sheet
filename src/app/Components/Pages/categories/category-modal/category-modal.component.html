@@ -1,0 +1,40 @@
+<form [formGroup]="categoryForm">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ data ? "Edit" : "Add" }} Category</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field appearance="fill" class="full-width" *ngIf="data">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="id" type="text" readonly />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" type="text" required />
+        <mat-error
+          *ngIf="
+            categoryForm.get('name')?.invalid &&
+            categoryForm.get('name')?.touched
+          "
+        >
+          Name is required.
+        </mat-error>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-fab (click)="closeModal()">
+        <mat-icon>cancel</mat-icon>
+      </button>
+      <button
+        mat-fab
+        color="primary"
+        type="submit"
+        (click)="saveCategory()"
+        [disabled]="categoryForm.invalid"
+      >
+        <mat-icon>check_circle</mat-icon>
+      </button>    
+    </mat-card-actions>
+  </mat-card>
+</form>

@@ -1,0 +1,13 @@
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.mat-mdc-card-header{
+  padding: 1rem;
+}
+mat-card-actions {
+  justify-content: end !important;
+  padding:0px 20px 20px 20px !important;
+  gap: 1rem !important;
+}
