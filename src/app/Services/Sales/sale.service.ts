@@ -1,9 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-export interface SalesProduct {
+export interface SalesProductMock {
   id: string;
   productName: string;
   category: string;
@@ -19,6 +19,28 @@ export interface DashboardStats {
   totalRevenue: number;
   totalProducts: number;
   avgOrderValue: number;
+}
+
+export interface SalesProduct {
+  date: string; // or Date if you want to convert later
+  productId: number;
+  categoryName: string;
+  sizeId: number;
+  obQuantity: number;
+  saleQuantity: number;
+  unitPrice: number;
+  salePrice: number;
+}
+
+export interface ProductSalesResponse {
+  totalCount: number;
+  pageNumber: number;
+  pageSize: number;
+   totalAvailableQuantity: number;
+  totalSaleQuantity: number;
+  totalUnitPrice: number;
+  totalSalePrice: number;
+  reports: SalesProduct[];
 }
 
 export interface SalesReportResponse {
@@ -50,7 +72,7 @@ export class SalesService {
 
   constructor(private http: HttpClient) {}
   
-  private mockSalesData: SalesProduct[] = [
+  private mockSalesData: SalesProductMock[] = [
     {
       id: '1',
       productName: 'Old Monch',
@@ -103,7 +125,7 @@ export class SalesService {
     },
   ];
 
-  getDailySales(): Observable<SalesProduct[]> {
+  getDailySales(): Observable<SalesProductMock[]> {
     return of(this.mockSalesData).pipe(delay(500));
   }
 
@@ -158,5 +180,14 @@ export class SalesService {
     const headers = new HttpHeaders({ Accept: 'application/pdf' });
 
     return this.http.get(url, { headers, responseType: 'blob' });
+  }
+
+  getProductSales( shopId: number, date: string, pageNumber: number, pageSize: number): Observable<ProductSalesResponse> {
+    const url = `${this.apiUrl}/product-sales/${shopId}/${encodeURIComponent(date)}`;
+    let params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
+
+    return this.http.get<ProductSalesResponse>(url, { params });
   }
 }

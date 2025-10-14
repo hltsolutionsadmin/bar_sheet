@@ -7,6 +7,7 @@ import {
   SalesProduct,
   DashboardStats,
   SalesService,
+  SalesProductMock,
 } from '../../../Services/Sales/sale.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
@@ -20,9 +21,9 @@ export class DashboardComponent implements OnInit {
   sidenavMode: 'side' | 'over' = 'side';
   sidenavOpened = true;
   currentUser: User | null = null;
-  salesData: SalesProduct[] = [];
+  salesData: SalesProductMock[] = [];
   dashboardStats: DashboardStats | null = null;
-  dataSource = new MatTableDataSource<SalesProduct>();
+  dataSource = new MatTableDataSource<SalesProductMock>();
   displayedColumns: string[] = [
     'productName',
     'category',

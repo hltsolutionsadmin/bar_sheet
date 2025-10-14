@@ -198,7 +198,6 @@ generateSalesReport(): void {
     });
   }
 
-  // Helper method to download PDF
   private downloadPdf(pdfBlob: Blob, fileName: string): void {
     const url = window.URL.createObjectURL(pdfBlob);
     const a = document.createElement('a');
@@ -210,7 +209,6 @@ generateSalesReport(): void {
     window.URL.revokeObjectURL(url);
   }
 
-  // Optional: Handle date changes for validation
   onStartDateChange(event: any): void {
     this.startDate = event.value;
   }

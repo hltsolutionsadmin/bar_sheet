@@ -19,3 +19,9 @@
   color: #666;
   margin-top: 8px;
 }
+
+.product-sales-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
