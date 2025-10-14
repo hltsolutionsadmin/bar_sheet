@@ -1,12 +1,21 @@
 {
   "name": "mu-bar-sheet",
   "version": "0.0.0",
+  "description": "My-BarSheet-app",
+  "main": "main.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "electron": "electron .",
+    "electron:dev": "cross-env NODE_ENV=development electron .",
+    "build:prod": "ng build --configuration production --base-href ./",
+    "electron:build": "npm run build:prod && electron-builder",
+    "postinstall": "electron-builder install-app-deps",
+    "package": "electron-builder --dir",
+    "dist": "ng build && electron-builder"
   },
   "private": true,
   "dependencies": {
@@ -30,6 +39,8 @@
     "@angular/cli": "^17.3.8",
     "@angular/compiler-cli": "^17.3.0",
     "@types/jasmine": "~5.1.0",
+    "electron": "^38.2.1",
+    "electron-builder": "^26.0.12",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -37,5 +48,28 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.4.2"
+  },
+  "build": {
+    "appId": "com.my-barSheet.app",
+    "productName": "my-barSheet",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/mu-bar-sheet/**/*",
+      "main.js",
+      "preload.js",
+      "package.json"
+    ],
+    "extraResources": [],
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   }
 }

@@ -47,6 +47,19 @@ export class SalesReportsComponent {
   totalSalesAmount = signal<number>(0);
   @Output() cancel = new EventEmitter<void>();
 
+  // New computed signal to check if any receipts, sale, or breaks have non-zero values
+  hasValidData = computed(() => {
+    return this.reportData().some((category) =>
+      category.items.some((item) =>
+        this.uniqueSizes().some((size) =>
+          (item.receipts[size] || 0) > 0 ||
+          (item.sale[size] || 0) > 0 ||
+          (item.breaks[size] || 0) > 0
+        )
+      )
+    );
+  });
+
   constructor(
     private productService: ProductService,
     private authService: AuthService,
@@ -420,48 +433,48 @@ export class SalesReportsComponent {
       });
   }
 
-  publishReport(): void {
-    this.saveStatus.set(null);
-    this.error.set(null);
-    const shopId = this.currentUser?.shopId || 1;
-    const date = this.formatDateForApi(this.today);
+  // publishReport(): void {
+  //   this.saveStatus.set(null);
+  //   this.error.set(null);
+  //   const shopId = this.currentUser?.shopId || 1;
+  //   const date = this.formatDateForApi(this.today);
 
-    this.salesService
-      .publishSalesReport(shopId, date)
-      .pipe(
-        catchError((err) => {
-          const errorMessage = err.message || 'Error publishing report';
-          if (errorMessage.includes('Report is already published')) {
-            this.error.set('Report already published');
-            this.snackBar.open('Report already published', 'Close', {
-              duration: 3000,
-              verticalPosition: 'top',
-            });
-          } else {
-            this.error.set(errorMessage);
-            this.snackBar.open('Something went wrong', 'Close', {
-              duration: 3000,
-              verticalPosition: 'top',
-            });
-            this.fetchData();
-          }
-          this.saveStatus.set('Error');
-          return of(null);
-        })
-      )
-      .subscribe((response) => {
-        if (response) {
-          this.reportData.set(this.transformApiData(response));
-          this.totalSalesAmount.set(response.totalSalesAmount || 0);
-          this.saveStatus.set('Report published successfully');
-          this.error.set(null);
-          this.snackBar.open('Report published successfully', 'Close', {
-            duration: 3000,
-            verticalPosition: 'top',
-          });
-        }
-      });
-  }
+  //   this.salesService
+  //     .publishSalesReport(shopId, date)
+  //     .pipe(
+  //       catchError((err) => {
+  //         const errorMessage = err.message || 'Error publishing report';
+  //         if (errorMessage.includes('Report is already published')) {
+  //           this.error.set('Report already published');
+  //           this.snackBar.open('Report already published', 'Close', {
+  //             duration: 3000,
+  //             verticalPosition: 'top',
+  //           });
+  //         } else {
+  //           this.error.set(errorMessage);
+  //           this.snackBar.open('Something went wrong', 'Close', {
+  //             duration: 3000,
+  //             verticalPosition: 'top',
+  //           });
+  //           this.fetchData();
+  //         }
+  //         this.saveStatus.set('Error');
+  //         return of(null);
+  //       })
+  //     )
+  //     .subscribe((response) => {
+  //       if (response) {
+  //         this.reportData.set(this.transformApiData(response));
+  //         this.totalSalesAmount.set(response.totalSalesAmount || 0);
+  //         this.saveStatus.set('Report published successfully');
+  //         this.error.set(null);
+  //         this.snackBar.open('Report published successfully', 'Close', {
+  //           duration: 3000,
+  //           verticalPosition: 'top',
+  //         });
+  //       }
+  //     });
+  // }
 
   private recalculateItem(item: ReportItem): ReportItem {
     const cb: ReportValues = {};

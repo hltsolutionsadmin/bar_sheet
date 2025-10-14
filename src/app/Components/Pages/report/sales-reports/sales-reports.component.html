@@ -1,115 +1,111 @@
 <div class="" style="height: 100%;">
   <mat-toolbar color="Grey">
-  <span>Products</span>
-  <span class="flex-spacer"></span>
-  <button mat-button color="primary" (click)="saveReport()">
-    <mat-icon>save</mat-icon>
-    Save
-  </button>
-  <button mat-button color="accent publish-button" (click)="publishReport()">
-    <mat-icon>publish</mat-icon>
-    Publish
-  </button>
-  <button mat-button (click)="onCancel()">
-    <mat-icon>cancel</mat-icon>
-    Cancel
-  </button>
-</mat-toolbar>
-<div class="page-wrap">
-  <mat-card class="card">
-    <div *ngIf="loading()" class="loading">Loading...</div>
-    <div class="table-wrap" role="region" aria-label="sales table" *ngIf="!loading()">
-      <table class="sheet">
-        <thead class="sheet-head">
-          <tr class="top-row">
-            <th class="col-name brand-name-cols" rowspan="2">Brand Name</th>
-            <th class="group-header ob" [matTooltip]="'Opening Balance'" [attr.colspan]="uniqueSizes().length">O.B.</th>
-            <th class="group-header receipts" [attr.colspan]="uniqueSizes().length">Receipts</th>
-            <th class="group-header sale" [attr.colspan]="uniqueSizes().length">Sale</th>
-            <th class="group-header breaks" [attr.colspan]="uniqueSizes().length">Breaks</th>
-            <th class="group-header cb" [matTooltip]="'Closing Balance'" [attr.colspan]="uniqueSizes().length">C.B.</th>
-            <th rowspan="2" class="col-amount">Amount</th>
-            <th rowspan="2" class="col-sales-amount">Sales Amount</th>
-          </tr>
-          <tr class="sub-row">
-            <ng-container *ngFor="let size of uniqueSizes()">
-              <th class="sub-col ob-q" [matTooltip]="getProductSizeName(size)">{{ getProductSizeName(size).charAt(0) }}</th>
-            </ng-container>
-            <ng-container *ngFor="let size of uniqueSizes()">
-              <th class="sub-col receipts-q" [matTooltip]="getProductSizeName(size)">{{ getProductSizeName(size).charAt(0) }}</th>
-            </ng-container>
-            <ng-container *ngFor="let size of uniqueSizes()">
-              <th class="sub-col sale-q" [matTooltip]="getProductSizeName(size)">{{ getProductSizeName(size).charAt(0) }}</th>
-            </ng-container>
-            <ng-container *ngFor="let size of uniqueSizes()">
-              <th class="sub-col breaks-q" [matTooltip]="getProductSizeName(size)">{{ getProductSizeName(size).charAt(0) }}</th>
-            </ng-container>
-            <ng-container *ngFor="let size of uniqueSizes()">
-              <th class="sub-col cb-q" [matTooltip]="getProductSizeName(size)">{{ getProductSizeName(size).charAt(0) }}</th>
-            </ng-container>
-          </tr>
-        </thead>
-
-        <tbody>
-          <ng-container *ngFor="let category of reportData(); let ci = index">
-            <tr class="category-row">
-              <td class="category-cell col-nos brand-name-cols">{{ category.category }}</td>
-              <td *ngFor="let size of uniqueSizes()" class="category-cell ob-n"></td>
-              <td *ngFor="let size of uniqueSizes()" class="category-cell receipts-n"></td>
-              <td *ngFor="let size of uniqueSizes()" class="category-cell sale-n"></td>
-              <td *ngFor="let size of uniqueSizes()" class="category-cell breaks-n"></td>
-              <td *ngFor="let size of uniqueSizes()" class="category-cell cb-n"></td>
-              <td class="category-cell col-amount"></td>
-              <td class="category-cell col-sales-amount"></td>
+    <span>Products</span>
+    <span class="flex-spacer"></span>
+    <button mat-button color="primary" [disabled]="!hasValidData()" (click)="saveReport()">
+      <mat-icon>save</mat-icon>
+      Save
+    </button>
+    <button mat-button (click)="onCancel()">
+      <mat-icon>cancel</mat-icon>
+      Cancel
+    </button>
+  </mat-toolbar>
+  <div class="page-wrap">
+    <mat-card class="card">
+      <div *ngIf="loading()" class="loading">Loading...</div>
+      <div class="table-wrap" role="region" aria-label="sales table" *ngIf="!loading()">
+        <table class="sheet">
+          <thead class="sheet-head">
+            <tr class="top-row">
+              <th class="col-name brand-name-cols" rowspan="2">Brand Name</th>
+              <th class="group-header ob" [matTooltip]="'Opening Balance'" [attr.colspan]="uniqueSizes().length">O.B.</th>
+              <th class="group-header receipts" [attr.colspan]="uniqueSizes().length">Receipts</th>
+              <th class="group-header sale" [attr.colspan]="uniqueSizes().length">Sale</th>
+              <th class="group-header breaks" [attr.colspan]="uniqueSizes().length">Breaks</th>
+              <th class="group-header cb" [matTooltip]="'Closing Balance'" [attr.colspan]="uniqueSizes().length">C.B.</th>
+              <th rowspan="2" class="col-amount">Amount</th>
+              <th rowspan="2" class="col-sales-amount">Sales Amount</th>
             </tr>
+            <tr class="sub-row">
+              <ng-container *ngFor="let size of uniqueSizes()">
+                <th class="sub-col ob-q" [matTooltip]="getProductSizeName(size)">{{ getProductSizeName(size).charAt(0) }}</th>
+              </ng-container>
+              <ng-container *ngFor="let size of uniqueSizes()">
+                <th class="sub-col receipts-q" [matTooltip]="getProductSizeName(size)">{{ getProductSizeName(size).charAt(0) }}</th>
+              </ng-container>
+              <ng-container *ngFor="let size of uniqueSizes()">
+                <th class="sub-col sale-q" [matTooltip]="getProductSizeName(size)">{{ getProductSizeName(size).charAt(0) }}</th>
+              </ng-container>
+              <ng-container *ngFor="let size of uniqueSizes()">
+                <th class="sub-col breaks-q" [matTooltip]="getProductSizeName(size)">{{ getProductSizeName(size).charAt(0) }}</th>
+              </ng-container>
+              <ng-container *ngFor="let size of uniqueSizes()">
+                <th class="sub-col cb-q" [matTooltip]="getProductSizeName(size)">{{ getProductSizeName(size).charAt(0) }}</th>
+              </ng-container>
+            </tr>
+          </thead>
 
-            <ng-container *ngFor="let item of category.items; let ri = index">
-              <tr class="data-row">
-                <td class="cell name brand-name-cols">{{ getProductName(item.id) }}</td>
-                <td *ngFor="let size of uniqueSizes()"
-                    class="cell numeric ob-col editable"
-                    [textContent]="displayValue(item.ob[size])"
-                    (blur)="updateCell($event, item, size, 'ob', ci, ri)">
-                </td>
-                <td *ngFor="let size of uniqueSizes()"
-                    class="cell numeric receipts-q editable"
-                    contenteditable="true"
-                    [textContent]="displayValue(item.receipts[size])"
-                    (blur)="updateCell($event, item, size, 'receipts', ci, ri)">
-                </td>
-                <td *ngFor="let size of uniqueSizes()"
-                    class="cell numeric sale-q editable"
-                    contenteditable="true"
-                    [textContent]="displayValue(item.sale[size])"
-                    (blur)="updateCell($event, item, size, 'sale', ci, ri)">
-                </td>
-                <td *ngFor="let size of uniqueSizes()"
-                    class="cell numeric breaks-q editable"
-                    contenteditable="true"
-                    [textContent]="displayValue(item.breaks[size])"
-                    (blur)="updateCell($event, item, size, 'breaks', ci, ri)">
-                </td>
-                <td *ngFor="let size of uniqueSizes()"
-                    class="cell numeric cb cb-q"
-                    [textContent]="displayValue(item.cb[size])">
-                </td>
-                <td class="cell amount">{{ displayValue(item.amount) }}</td>
-                <td class="cell sales-amount">{{ displayValue(this.salesAmount()(item)) }}</td>
+          <tbody>
+            <ng-container *ngFor="let category of reportData(); let ci = index">
+              <tr class="category-row">
+                <td class="category-cell col-nos brand-name-cols">{{ category.category }}</td>
+                <td *ngFor="let size of uniqueSizes()" class="category-cell ob-n"></td>
+                <td *ngFor="let size of uniqueSizes()" class="category-cell receipts-n"></td>
+                <td *ngFor="let size of uniqueSizes()" class="category-cell sale-n"></td>
+                <td *ngFor="let size of uniqueSizes()" class="category-cell breaks-n"></td>
+                <td *ngFor="let size of uniqueSizes()" class="category-cell cb-n"></td>
+                <td class="category-cell col-amount"></td>
+                <td class="category-cell col-sales-amount"></td>
               </tr>
+
+              <ng-container *ngFor="let item of category.items; let ri = index">
+                <tr class="data-row">
+                  <td class="cell name brand-name-cols">{{ getProductName(item.id) }}</td>
+                  <td *ngFor="let size of uniqueSizes()"
+                      class="cell numeric ob-col editable"
+                      [textContent]="displayValue(item.ob[size])"
+                      (blur)="updateCell($event, item, size, 'ob', ci, ri)">
+                  </td>
+                  <td *ngFor="let size of uniqueSizes()"
+                      class="cell numeric receipts-q editable"
+                      contenteditable="true"
+                      [textContent]="displayValue(item.receipts[size])"
+                      (blur)="updateCell($event, item, size, 'receipts', ci, ri)">
+                  </td>
+                  <td *ngFor="let size of uniqueSizes()"
+                      class="cell numeric sale-q editable"
+                      contenteditable="true"
+                      [textContent]="displayValue(item.sale[size])"
+                      (blur)="updateCell($event, item, size, 'sale', ci, ri)">
+                  </td>
+                  <td *ngFor="let size of uniqueSizes()"
+                      class="cell numeric breaks-q editable"
+                      contenteditable="true"
+                      [textContent]="displayValue(item.breaks[size])"
+                      (blur)="updateCell($event, item, size, 'breaks', ci, ri)">
+                  </td>
+                  <td *ngFor="let size of uniqueSizes()"
+                      class="cell numeric cb cb-q"
+                      [textContent]="displayValue(item.cb[size])">
+                  </td>
+                  <td class="cell amount">{{ displayValue(item.amount) }}</td>
+                  <td class="cell sales-amount">{{ displayValue(this.salesAmount()(item)) }}</td>
+                </tr>
+              </ng-container>
             </ng-container>
-          </ng-container>
-        </tbody>
-      </table>
-       <div class="total-amounts" *ngIf="!loading()">
-        <div class="date">Date: <span class="date-value">{{ today | date: 'dd-MM-yyyy' }}</span></div>
-            <p [attr.colspan]="uniqueSizes().length * 5 + 2" class="total-label">Total:</p>
-            <p class="total-value">{{ totalAmount() }}</p>
-            <p [attr.colspan]="uniqueSizes().length * 5 + 2" class="total-label">Total Sale:</p>
-            <p class="total-value">{{ computedTotalSalesAmount() }}</p>
-            <p [attr.colspan]="uniqueSizes().length * 5 + 2" class="total-label">Total Breaks:</p>
-            <p class="total-value">{{ computedTotalBreaksAmount() }}</p>
-          </div>
-    </div>
-  </mat-card>
-</div>
+          </tbody>
+        </table>
+        <div class="total-amounts" *ngIf="!loading()">
+          <div class="date">Date: <span class="date-value">{{ today | date: 'dd-MM-yyyy' }}</span></div>
+          <p [attr.colspan]="uniqueSizes().length * 5 + 2" class="total-label">Total:</p>
+          <p class="total-value">{{ totalAmount() }}</p>
+          <p [attr.colspan]="uniqueSizes().length * 5 + 2" class="total-label">Total Sale:</p>
+          <p class="total-value">{{ computedTotalSalesAmount() }}</p>
+          <p [attr.colspan]="uniqueSizes().length * 5 + 2" class="total-label">Total Breaks:</p>
+          <p class="total-value">{{ computedTotalBreaksAmount() }}</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
 </div>
