@@ -1,14 +1,14 @@
 import { Shop } from './shop';
 
 export class ProductSize {
-  productSizeId?: number;
+  productSizeId: number;
   name: string;
   shopId: number;
   shop?: Shop;
-  createdAt: Date;
-  updatedAt: Date;
-  createdBy: string;
-  isActive: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: string;
+  isActive?: boolean;
 
   constructor(data: any) {
     this.productSizeId = data.ProductSizeId || 0;

@@ -6,9 +6,9 @@ export class Category {
   name: string;
   shopId: number;
   shop?: Shop;
-  createdAt: Date;
-  updatedAt: Date;
-  createdBy: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: string;
   products?: Array<Product>[];
 
   constructor(data: any) {

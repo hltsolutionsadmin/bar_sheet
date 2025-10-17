@@ -125,7 +125,7 @@ export class DashboardContentComponent {
     .getProductSales(this.shopId, dateStr, pageNumber, pageSize)
     .subscribe({
       next: (resp: ProductSalesResponse) => {
-        this.salesData = resp.reports;
+       this.salesData = resp.reports;
         this.dataSource.data = resp.reports;
         this.totalCount = resp.totalCount ?? 0;
 

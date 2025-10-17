@@ -28,14 +28,8 @@ export class ProductSizeService {
   }
 
   // Update a productSize
-  updateProductSize(
-    id: number,
-    productSize: ProductSize
-  ): Observable<ProductSize> {
-    return this.httpService.put<ProductSize>(
-      `${this.apiUrl}/${id}`,
-      productSize
-    );
+  updateProductSize( id: number, productSize: any ): Observable<ProductSize> { 
+    return this.httpService.put<ProductSize>(`${this.apiUrl}/${id}`,productSize);
   }
 
   // Delete a productSize

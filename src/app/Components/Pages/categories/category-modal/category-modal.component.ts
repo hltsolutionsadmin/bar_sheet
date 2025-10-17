@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Category } from '../../../../Models/category';
 import { CategoryService } from '../../../../Services/Category/category.service';
 import { AuthService, User } from '../../../../Services/Auth/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-category-modal',
@@ -19,7 +20,8 @@ export class CategoryModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: Category | null,
     private fb: FormBuilder,
     private categoryService: CategoryService,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackBar: MatSnackBar
   ) {
     this.authService.currentUser$.subscribe((user) => {
       this.currentUser = user;
@@ -43,7 +45,8 @@ export class CategoryModalComponent {
       name: name,
       id: id,
     });
-    this.categoryService
+    if(!id){
+      this.categoryService
       .createCategory({
         createdAt: new Date(),
         createdBy: this.currentUser?.name || 'SYSTEM',
@@ -55,12 +58,35 @@ export class CategoryModalComponent {
       .subscribe(
         (response) => {
           console.log('Category created successfully:', response);
-          this.dialogRef.close(response); // Close modal and pass back the new category
+          this.dialogRef.close(response);
+          this.snackBar.open('Login successful!', 'Close', {
+            duration: 3000,
+            panelClass: ['success-snackbar'],
+          });
         },
         (error) => {
           console.error('Error creating category:', error);
         }
       );
+    } else {
+      const categoryToUpdate: Category = {
+        id: id,
+        name: name,
+        shopId: this.currentUser?.shopId || 0,
+      }
+      this.categoryService.updateCategory(id, categoryToUpdate).subscribe({
+        next: (response) => {
+          this.dialogRef.close(response);
+          this.snackBar.open('Login successful!', 'Close', {
+            duration: 3000,
+            panelClass: ['success-snackbar'],
+          });
+        }, error: (error) => {
+          console.error('Error updating category:', error);
+        }
+      })
+    }
+    
   }
 
   closeModal() {

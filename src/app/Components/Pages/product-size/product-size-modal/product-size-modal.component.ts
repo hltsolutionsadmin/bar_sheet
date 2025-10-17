@@ -34,33 +34,47 @@ export class ProductSizeModalComponent {
     })
   }
 
-  onSave(): void {
-   if (this.productSizeForm.invalid) {
-      this.productSizeForm.markAllAsTouched();
-      return;
-    }
-    const { name, id , isActive} = this.productSizeForm.value;
-    console.log('Product Size saved:', {
-      name: name,
-      id: id,
-      isActive: isActive
-    });
-    this.productSizeService.createProductSize({
-      createdAt: new Date(),
-      createdBy: this.currentUser?.name || 'SYSTEM',
-      updatedAt: new Date(),
-      shopId: this.currentUser?.shopId || 0,
-      name: name,
-      isActive: isActive,
-    }).subscribe(
-      (response) => {
-        this.dialogRef.close(response);
-      },
-      (error) => {
-        console.error('Error creating product size:', error);
-      }
-    )
+ onSave(): void {
+  if (this.productSizeForm.invalid) {
+    this.productSizeForm.markAllAsTouched();
+    return;
   }
+
+  const { name, id, isActive } = this.productSizeForm.value;
+
+  const productSize: ProductSize = {
+    productSizeId: id || 0,
+    name,
+    isActive,
+    createdAt: this.data?.createdAt || new Date(),
+    createdBy: this.data?.createdBy || this.currentUser?.name || 'SYSTEM',
+    updatedAt: new Date(),
+    shopId: this.currentUser?.shopId || 0
+  };
+
+  // 🔹 If editing, call update service
+  if (id) {
+    this.productSizeService.updateProductSize(id, productSize).subscribe({
+      next: (updated) => {
+        this.dialogRef.close(updated);
+      },
+      error: (err) => {
+        console.error('Error updating product size:', err);
+      }
+    });
+  } 
+  // 🔹 Otherwise, create new one
+  else {
+    this.productSizeService.createProductSize(productSize).subscribe({
+      next: (created) => {
+        this.dialogRef.close(created);
+      },
+      error: (err) => {
+        console.error('Error creating product size:', err);
+      }
+    });
+  }
+}
 
   onCancel(): void {
     this.dialogRef.close();
