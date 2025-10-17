@@ -53,11 +53,6 @@ export class CategoriesComponent {
   }
 
   openCategoryModal(category?: Category): void {
-    // Logic to open the modal goes here.
-    // If using Angular Material Dialog:
-    // this.dialog.open(CategoryModalComponent, { data: category || null });
-    // If using another modal library, trigger it here.
-    // For now, just log for demonstration:
     if (category) {
       console.log('Edit category:', category);
       this.dialogRef
@@ -68,7 +63,7 @@ export class CategoriesComponent {
         })
         .afterClosed()
         .subscribe(() => {
-          this.loadCategories(); // Refresh categories after modal closes (assuming changes might have been made)
+          this.loadCategories(); 
         });
     } else {
       console.log('Add new category');
@@ -80,9 +75,17 @@ export class CategoriesComponent {
         })
         .afterClosed()
         .subscribe(() => {
-          this.loadCategories(); // Refresh categories after modal closes (assuming changes might have been made)
+          this.loadCategories(); 
         });
     }
+  }
+
+  deleteCategory(id: string) {
+    this.categoryService.deleteCategory(id).subscribe({
+      next: () => {
+        this.loadCategories();
+      }
+    })
   }
 
   logout(): void {

@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
   salesData: SalesProductMock[] = [];
   dashboardStats: DashboardStats | null = null;
   dataSource = new MatTableDataSource<SalesProductMock>();
+  businessName : string = '';
   displayedColumns: string[] = [
     'productName',
     'category',
@@ -39,7 +40,14 @@ export class DashboardComponent implements OnInit {
     private salesService: SalesService,
     private router: Router,
     private breakpointObserver: BreakpointObserver
-  ) {}
+  ) {
+    if(localStorage) {
+      const userData = localStorage.getItem('user');
+      if(userData) {
+        this.businessName = JSON.parse(userData).firstName + ' ' + JSON.parse(userData).lastName;
+      }
+    }
+  }
 
   ngOnInit(): void {
     this.authService.currentUser$.subscribe((user) => {

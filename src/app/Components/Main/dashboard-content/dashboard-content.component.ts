@@ -125,11 +125,9 @@ export class DashboardContentComponent {
     .getProductSales(this.shopId, dateStr, pageNumber, pageSize)
     .subscribe({
       next: (resp: ProductSalesResponse) => {
-        const filteredReports = resp.reports.filter(r => r.saleQuantity > 0);
-
-        this.salesData = filteredReports;
-        this.dataSource.data = filteredReports;
-        this.totalCount = filteredReports.length;
+       this.salesData = resp.reports;
+        this.dataSource.data = resp.reports;
+        this.totalCount = resp.totalCount ?? 0;
 
         // ✅ Bind totals from API response
         this.totalAvailableQuantity = resp.totalAvailableQuantity;

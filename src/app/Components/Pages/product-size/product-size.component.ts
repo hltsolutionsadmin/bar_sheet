@@ -27,7 +27,7 @@ export class ProductSizeComponent implements OnInit {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private productSizeService: ProductSizeService,
-    private cdr: ChangeDetectorRef // Added for manual change detection
+    private cdr: ChangeDetectorRef 
   ) {}
 
   ngOnInit(): void {
@@ -106,16 +106,11 @@ export class ProductSizeComponent implements OnInit {
   }
 
   deleteSize(id: number): void {
-    if (confirm('Are you sure you want to delete this product size?')) {
-      this.productSizes = this.productSizes.filter(
-        (s) => s.productSizeId !== id
-      );
-      this.dataSource.data = [...this.productSizes];
-      this.cdr.detectChanges(); // Ensure UI updates
-      this.snackBar.open('Product size deleted successfully!', 'Close', {
-        duration: 3000,
-      });
-    }
+   this.productSizeService.deleteProductSize(id).subscribe({
+      next: () => {
+        this.loadProductSizes();
+      }
+   })
   }
 
   logout(): void {

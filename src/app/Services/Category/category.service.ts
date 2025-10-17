@@ -33,7 +33,7 @@ export class CategoryService {
   }
 
   // Delete a category
-  deleteCategory(id: number): Observable<void> {
+  deleteCategory(id: string): Observable<void> {
     return this.httpService.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
